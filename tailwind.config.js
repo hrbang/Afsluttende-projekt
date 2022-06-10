@@ -9,7 +9,15 @@ module.exports = {
             lg: "976px",
             xl: "1440px",
         },
-        colors: {},
+        colors: {
+          primary: "#00DC82",
+          secondary: "#80EEC0",
+        },
+        inputFields: {
+          border: "2px solid",
+          borderColor: "rgba(0,0,0,0.07)",
+          borderRadius: "15px",
+        },
         opacity: {
             0: "0",
             20: "0.2",
