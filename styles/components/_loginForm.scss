@@ -3,23 +3,28 @@
     margin: 0 auto;
 
     &_inner {
-
-        form {
-
-            .form-group {
-
-                label {
-
-                }
-
-                input {
-
-                }
-
+        &__header {
+            padding-bottom: 20px;
+            &_title {
+                text-transform: uppercase;
+                font-weight: 800;
+                font-size: 38px;
             }
-
+            &_signup {
+            }
         }
 
+        form {
+            .form-label {
+                font-size: 13px;
+            }
+            .btn-primary {
+                width: 100%;
+                font-size: 16px;
+                font-weight: 700;
+                color: #181818;
+                text-transform: uppercase;
+            }
+        }
     }
-
 }

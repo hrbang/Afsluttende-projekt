@@ -18,9 +18,9 @@ export default function login() {
                     </Col>
                 </Row>
             </Container>
-            <div class="shape-blob"></div>
-            <div class="shape-blob one"></div>
-            <div class="shape-blob two"></div>
+            <div className="shape-blob"></div>
+            <div className="shape-blob one"></div>
+            <div className="shape-blob two"></div>
         </div>
     )
 }
