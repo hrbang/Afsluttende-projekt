@@ -3,6 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind form;
 
 *,
 ::before,
@@ -226,4 +227,9 @@ img,
 video {
   max-width: 100%;
   height: auto;
+}
+
+.form-container {
+    max-width: 1440px;
+    margin: 0 auto;
 }
