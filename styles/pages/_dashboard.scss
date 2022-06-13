@@ -1,0 +1,46 @@
+.dashboard {
+    background-color: $primary;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+
+    .wrapper {
+        z-index: 1000;
+        width: 100%;
+        margin-top: 150px;
+
+        .content {
+            padding: 50px;
+            background-color: #fff;
+            width: 100%;
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0px 0px 17px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .cat {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        .item {
+            font-size: 28px;
+        }
+
+        .username {
+            .username_title {
+            }
+            .username_name {
+            }
+        }
+
+        .email {
+            .email_title {
+            }
+            .email_name {
+            }
+        }
+    }
+}
