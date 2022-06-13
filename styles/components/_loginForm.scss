@@ -1,18 +1,17 @@
-.loginform {
-    max-width: 350px;
+.auth {
+    max-width: 100%;
     margin: 0 auto;
+    opacity: 1;
+    display: block;
+    transition: all 100ms ease-in-out;
+
+    &.hidden {
+        margin-left: 500px;
+        opacity: 0;
+        display: none;
+    }
 
     &_inner {
-        &__header {
-            padding-bottom: 20px;
-            &_title {
-                text-transform: uppercase;
-                font-weight: 800;
-                font-size: 38px;
-            }
-            &_signup {
-            }
-        }
 
         form {
             .form-label {
@@ -22,7 +21,7 @@
                 width: 100%;
                 font-size: 16px;
                 font-weight: 700;
-                color: #181818;
+                color: #252525;
                 text-transform: uppercase;
             }
         }

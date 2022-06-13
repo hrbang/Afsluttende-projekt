@@ -1,17 +1,12 @@
 import React from "react"
-import Link from "next/link"
 
 // Bootstrap
 import { Form, Button } from "react-bootstrap"
 
-export default function LoginForm() {
+export default function LoginForm({show}) {
     return (
-        <div className="loginform">
-            <div className="loginform_inner">
-                <div className="loginform_inner__header">
-                    <h2 className="loginform_inner__header_title">Sign in</h2>
-                    <p className="loginform_inner__header_signup">Don't have an account? <Link href="/"><a>Sign up here!</a></Link></p>
-                </div>
+        <div className={show == true ? "auth hidden" : "auth"}>
+            <div className="auth_inner">
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>

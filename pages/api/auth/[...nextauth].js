@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 const options = {
   providers: [
     CredentialsProvider({
-      name: 'Postrai',
+      name: 'Project',
       credentials: {
         email: {
           label: 'Email',
@@ -77,7 +77,7 @@ const options = {
     encryption: true
   },
   pages: {
-    signIn: '/login'
+    signIn: '/authentication'
   }
 };
 
