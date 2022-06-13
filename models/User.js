@@ -11,9 +11,12 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
+  username: {
     type: String,
     required: true
+  },
+  description: {
+    type: String
   },
   role: {
     type: String,
