@@ -1,11 +1,9 @@
-import dbConnect from '../../../lib/dbConnect'
+import dbConnect from '../../../lib/dbConnect';
 import User from '../../../models/User';
 import bcrypt from 'bcrypt';
 
-import { nanoid } from 'nanoid';
-
 export default async function handler(req, res) {
-  const { email, password } = req.body;
+  const { firstName, lastName, username, email, password } = req.body;
   if (req.method === 'POST') {
     if (!email.length > 3 || !password.length > 3) {
       res.status(200).json({
@@ -22,18 +20,13 @@ export default async function handler(req, res) {
       if (!existingUser) {
         const passwordHash = await bcrypt.hash(password, 10);
         const user = new User({
+          firstName,
+          lastName,
+          username,
           email,
           password: passwordHash
         });
         await user.save();
-
-        const securedTokenId = nanoid(128);
-        User.findOneAndUpdate(
-          { email: email },
-          {
-            'emailVerified.EVT': securedTokenId
-          }
-        );
       } else {
         res.status(200).json({
           success: false,
