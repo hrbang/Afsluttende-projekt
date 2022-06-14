@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
+import router from 'next/router';
 
 // Bootstrap
 import { Form, Button } from 'react-bootstrap';
