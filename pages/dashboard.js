@@ -1,15 +1,45 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Background from '../components/Background';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import dbConnect from '../lib/dbConnect';
 import User from '../models/User';
+import axios from 'axios';
 
 // Bootstrap
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 export default function dashboard({ user }) {
-  console.log(user);
+  const [isError, setIsError] = useState(false);
+  const [users, setUsers] = useState([]);
+  const form = useRef({});
+
+  const handleNewDescription = async () => {
+    const newDescription = await axios.post('api/user/newDescription', {
+      _id: user.id,
+      description: form.current.description.value
+    });
+    if (newDescription.data.success == false) {
+      setErrorMessage(response.data.error);
+      setIsError(true);
+      setLoading(false);
+    } else {
+      setIsError(false);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: response } = await axios.get('/api/user/users');
+        setUsers(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className='main'>
       <div className='dashboard'>
@@ -39,8 +69,16 @@ export default function dashboard({ user }) {
                   <p className='desc_title cat'>Description</p>
                   <Form>
                     <Form.Group className='mb-3' controlId='formBasicPassword'>
-                      <Form.Control as='textarea' rows={3} />
+                      <Form.Control
+                        as='textarea'
+                        rows={3}
+                        placeholder={user.description}
+                        ref={(input) => (form.current.description = input)}
+                      />
                     </Form.Group>
+                    <Button variant='primary' type='submit' onClick={handleNewDescription}>
+                      Save
+                    </Button>
                   </Form>
                 </div>
               </Col>
@@ -72,7 +110,8 @@ export async function getServerSideProps(context) {
       user: {
         id: user._id.toString(),
         email: user.email ? user.email : null,
-        username: user.email ? user.username : null,
+        username: user.username ? user.username : null,
+        description: user.description ? user.description : null,
         role: user.role ? user.role : null,
         firstName: user.firstName ? user.firstName : null,
         lastName: user.lastName ? user.lastName : null
