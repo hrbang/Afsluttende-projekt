@@ -7,12 +7,13 @@ import User from '../models/User';
 import axios from 'axios';
 
 // Bootstrap
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
 
 export default function dashboard({ user }) {
   const [isError, setIsError] = useState(false);
   const [users, setUsers] = useState([]);
   const form = useRef({});
+  console.log(users);
 
   const handleNewDescription = async () => {
     const newDescription = await axios.post('api/user/newDescription', {
@@ -59,12 +60,12 @@ export default function dashboard({ user }) {
                 </div>
               </Col>
               <Col lg={4}>
-                <div className='password content'>
-                  <p className='password_title cat'>Role</p>
-                  <p className='passworld_pass item'>{user.role}</p>
+                <div className='role content'>
+                  <p className='role_title cat'>Role</p>
+                  <p className='role_pass item'>{user.role}</p>
                 </div>
               </Col>
-              <Col lg={12}>
+              <Col lg={12} className='mb-4'>
                 <div className='description content'>
                   <p className='desc_title cat'>Description</p>
                   <Form>
@@ -82,6 +83,67 @@ export default function dashboard({ user }) {
                   </Form>
                 </div>
               </Col>
+              <Col lg={12} className='mb-4'>
+                <div className='password content'>
+                  <p className='password_title cat'>Password</p>
+                  <Form>
+                    <Form.Group className='mb-3' controlId='formBasicPassword'>
+                      <div className="password_fields">
+                        <Form.Control type="password" ref={(input) => (form.current.password = input)} />
+                        <Form.Control type="password" className="mx-3" ref={(input) => (form.current.password = input)} />
+                        <Button variant='primary' type='submit' onClick={handleNewDescription}>
+                          Update
+                        </Button>
+                      </div>
+                    </Form.Group>
+                  </Form>
+                </div>
+              </Col>
+              {user.role === "admin" && (
+                <Col lg={12}>
+                  <div className="userlist content">
+                    <p className='userlist_title cat'>Platform Users</p>
+                    {/* <div className="userlist_actions mt-4">
+                      <Button variant='primary' type='submit' onClick={handleNewDescription}>
+                        Create user
+                      </Button>
+                    </div> */}
+                    <div className="userlist_users mt-4">
+                      <Table striped>
+                        <thead>
+                          <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>E-mail</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {users.map((user) => {
+                            return (
+                              <>
+                                <td className="py-3">{user.firstName}</td>
+                                <td className="py-3">{user.lastName}</td>
+                                <td className="py-3">{user.email}</td>
+                                <td className="py-3">{user.username}</td>
+                                <td className="py-3">
+                                  <select name="role">
+                                    <option selected value={user.role}>{user.role}</option>
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="superadmin">Super admin</option>
+                                  </select>
+                                </td>
+                              </>
+                            )
+                          })}
+                        </tbody>
+                      </Table>
+                    </div>
+                  </div>
+                </Col>
+              )}
             </Row>
           </Container>
         </div>
