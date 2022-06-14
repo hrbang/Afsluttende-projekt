@@ -30,8 +30,8 @@ export default function dashboard({ user }) {
               </Col>
               <Col lg={4}>
                 <div className='password content'>
-                  <p className='password_title cat'>Password</p>
-                  <p className='passworld_pass item'>Password</p>
+                  <p className='password_title cat'>Role</p>
+                  <p className='passworld_pass item'>{user.role}</p>
                 </div>
               </Col>
               <Col lg={12}>
@@ -73,6 +73,7 @@ export async function getServerSideProps(context) {
         id: user._id.toString(),
         email: user.email ? user.email : null,
         username: user.email ? user.username : null,
+        role: user.role ? user.role : null,
         firstName: user.firstName ? user.firstName : null,
         lastName: user.lastName ? user.lastName : null
       }
