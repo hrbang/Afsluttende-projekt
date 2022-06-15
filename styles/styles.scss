@@ -80,5 +80,10 @@
         width: 100%;
         align-items: center;
         justify-content: center;
+
+    .text {
+        z-index: 10000;
+    }
+
 }
 
