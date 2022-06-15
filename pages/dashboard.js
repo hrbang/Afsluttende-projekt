@@ -14,6 +14,29 @@ export default function dashboard({ user }) {
   const [users, setUsers] = useState([]);
   const form = useRef({});
 
+  async function getJoke() {
+    const options = {
+      method: 'GET',
+      url: 'https://joke3.p.rapidapi.com/v1/joke',
+      headers: {
+        'X-RapidAPI-Key': 'fb8d3b8980msh570fcd900c3bd18p168c0ajsnfabae8ef5bb9',
+        'X-RapidAPI-Host': 'joke3.p.rapidapi.com'
+      }
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        //console.log(response.data);
+        return response.data;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
+
+  console.log(getJoke().data);
+
   const handleNewDescription = async () => {
     const newDescription = await axios.post('api/user/newDescription', {
       _id: user.id,
