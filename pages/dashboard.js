@@ -122,7 +122,7 @@ export default function dashboard({ user }) {
                         <tbody>
                           {users.map((user) => {
                             return (
-                              <>
+                              <tr>
                                 <td className="py-3">{user.firstName}</td>
                                 <td className="py-3">{user.lastName}</td>
                                 <td className="py-3">{user.email}</td>
@@ -135,7 +135,7 @@ export default function dashboard({ user }) {
                                     <option value="superadmin">Super admin</option>
                                   </select>
                                 </td>
-                              </>
+                              </tr>
                             )
                           })}
                         </tbody>
