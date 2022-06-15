@@ -1,13 +1,13 @@
 .dashboard {
     background-color: $primary;
     display: flex;
-    height: 100vh;
+    height: 100%;
     width: 100%;
 
     .wrapper {
         z-index: 1000;
         width: 100%;
-        margin-top: 150px;
+        margin: 150px 0px;
 
         .content {
             padding: 50px;
@@ -40,6 +40,20 @@
             .email_title {
             }
             .email_name {
+            }
+        }
+
+        .password {
+            &_fields {
+                display: flex;
+
+                input {
+                    width: 33%;
+                }
+
+                button {
+                    width: 33%;
+                }
             }
         }
     }

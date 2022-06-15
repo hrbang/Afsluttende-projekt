@@ -12,7 +12,7 @@
     border-radius: 30% 50% 20% 40%;
     animation: transform 20s ease-in-out infinite both alternate, movement_one 40s ease-in-out infinite both;
     opacity: 1;
-    position: absolute;
+    position: fixed;
     left: 70%;
     top: 50%;
 
@@ -84,6 +84,4 @@
     .text {
         z-index: 10000;
     }
-
 }
-

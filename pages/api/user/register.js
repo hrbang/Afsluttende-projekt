@@ -27,6 +27,10 @@ export default async function handler(req, res) {
           password: passwordHash
         });
         await user.save();
+        res.status(200).json({
+          success: true,
+          error: 'User is created.'
+        });
       } else {
         res.status(200).json({
           success: false,
