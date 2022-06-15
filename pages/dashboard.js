@@ -13,7 +13,6 @@ export default function dashboard({ user }) {
   const [isError, setIsError] = useState(false);
   const [users, setUsers] = useState([]);
   const form = useRef({});
-  console.log(users);
 
   const handleNewDescription = async () => {
     const newDescription = await axios.post('api/user/newDescription', {
@@ -21,14 +20,39 @@ export default function dashboard({ user }) {
       description: form.current.description.value
     });
     if (newDescription.data.success == false) {
-      setErrorMessage(response.data.error);
       setIsError(true);
-      setLoading(false);
+    } else {
+      setIsError(false);
+    }
+  };
+  const handleResetPassword = async () => {
+    const newDescription = await axios.post('api/user/resetPassword', {
+      _id: user.id,
+      passwordOne: form.current.passwordOne.value,
+      passwordTwo: form.current.passwordTwo.value
+    });
+    if (newDescription.data.success == false) {
+      setIsError(true);
     } else {
       setIsError(false);
     }
   };
 
+  async function handleUserRoleChange(user) {
+    if (form.current.role) {
+      const newRole = await axios.post('api/user/roleChange', {
+        _id: user._id,
+        role: form.current.role.value
+      });
+      if (newRole.data.success == false) {
+        setIsError(true);
+      } else {
+        setIsError(false);
+      }
+    } else {
+      return;
+    }
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -88,10 +112,19 @@ export default function dashboard({ user }) {
                   <p className='password_title cat'>Password</p>
                   <Form>
                     <Form.Group className='mb-3' controlId='formBasicPassword'>
-                      <div className="password_fields">
-                        <Form.Control type="password" ref={(input) => (form.current.password = input)} />
-                        <Form.Control type="password" className="mx-3" ref={(input) => (form.current.password = input)} />
-                        <Button variant='primary' type='submit' onClick={handleNewDescription}>
+                      <div className='password_fields'>
+                        <Form.Control
+                          type='password'
+                          ref={(input) => (form.current.passwordOne = input)}
+                          placeholder='Enter Password'
+                        />
+                        <Form.Control
+                          type='password'
+                          className='mx-3'
+                          ref={(input) => (form.current.passwordTwo = input)}
+                          placeholder='Repeat Password'
+                        />
+                        <Button variant='primary' type='submit' onClick={handleResetPassword}>
                           Update
                         </Button>
                       </div>
@@ -99,16 +132,16 @@ export default function dashboard({ user }) {
                   </Form>
                 </div>
               </Col>
-              {user.role === "admin" && (
+              {user.role === 'admin' && (
                 <Col lg={12}>
-                  <div className="userlist content">
+                  <div className='userlist content'>
                     <p className='userlist_title cat'>Platform Users</p>
                     {/* <div className="userlist_actions mt-4">
                       <Button variant='primary' type='submit' onClick={handleNewDescription}>
                         Create user
                       </Button>
                     </div> */}
-                    <div className="userlist_users mt-4">
+                    <div className='userlist_users mt-4'>
                       <Table striped>
                         <thead>
                           <tr>
@@ -117,26 +150,34 @@ export default function dashboard({ user }) {
                             <th>E-mail</th>
                             <th>Username</th>
                             <th>Role</th>
+                            <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {users.map((user) => {
                             return (
                               <tr>
-                                <td className="py-3">{user.firstName}</td>
-                                <td className="py-3">{user.lastName}</td>
-                                <td className="py-3">{user.email}</td>
-                                <td className="py-3">{user.username}</td>
-                                <td className="py-3">
-                                  <select name="role">
-                                    <option selected value={user.role}>{user.role}</option>
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="superadmin">Super admin</option>
+                                <td className='py-3'>{user.firstName}</td>
+                                <td className='py-3'>{user.lastName}</td>
+                                <td className='py-3'>{user.email}</td>
+                                <td className='py-3'>{user.username}</td>
+                                <td className='py-3'>
+                                  <select name='role' ref={(input) => (form.current.role = input)}>
+                                    <option selected value={user.role}>
+                                      {user.role}
+                                    </option>
+                                    <option value='user'>User</option>
+                                    <option value='admin'>Admin</option>
+                                    <option value='superadmin'>Super admin</option>
                                   </select>
                                 </td>
+                                <td>
+                                  <Button variant='primary' onClick={() => handleUserRoleChange(user)}>
+                                    Update
+                                  </Button>
+                                </td>
                               </tr>
-                            )
+                            );
                           })}
                         </tbody>
                       </Table>
