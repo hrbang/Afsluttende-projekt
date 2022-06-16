@@ -43,6 +43,36 @@
             }
         }
 
+        .joke {
+            font-size: 28px;
+        }
+
+        .punchline {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 50ms ease-in-out;
+            
+            &.show {
+                opacity: 1;
+            }
+        }
+
+        .reveal {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 50ms ease-in-out;
+            
+            &.show {
+                opacity: 1;
+            }
+        }
+
         .password {
             &_fields {
                 display: flex;
