@@ -153,20 +153,20 @@ export default function dashboard({ user }) {
               </Col>
               <Col lg={12} className='mb-4'>
                 <div className='password content'>
-                  <p className='password_title cat'>Password</p>
+                  <p className='password_title cat'>Change Password</p>
                   <Form>
                     <Form.Group className='mb-3' controlId='formBasicPassword'>
                       <div className='password_fields'>
                         <Form.Control
                           type='password'
                           ref={(input) => (form.current.passwordOne = input)}
-                          placeholder='Enter Password'
+                          placeholder='Enter New Password'
                         />
                         <Form.Control
                           type='password'
                           className='mx-3'
                           ref={(input) => (form.current.passwordTwo = input)}
-                          placeholder='Repeat Password'
+                          placeholder='Repeat New Password'
                         />
                         <Button variant='primary' type='submit' onClick={handleResetPassword}>
                           Update
