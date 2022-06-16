@@ -104,16 +104,118 @@ export default function dashboard({ user }) {
     fetchData();
   }, []);
 
-  return (
-    <div className='main'>
-      <div className='dashboard'>
-        <div className='wrapper'>
-          <Container>
-            <Row>
-              <Col lg={4} className='mb-4' data-testid='username'>
-                <div className='username content'>
-                  <p className='username_title cat'>Username</p>
-                  <p className='username_name item'>{user.username}</p>
+    return (
+        <div className="main">
+            <div className="dashboard">
+                <div className="wrapper">
+                    <Container>
+                        <Row>
+                            <Col lg={4} className="mb-4">
+                                <div className="username content">
+                                    <p className="username_title cat">Username</p>
+                                    <p className="username_name item">{user.username}</p>
+                                </div>
+                            </Col>
+                            <Col lg={4} className="mb-4">
+                                <div className="email content">
+                                    <p className="email_title cat">E-mail</p>
+                                    <p className="email_name item">{user.email}</p>
+                                </div>
+                            </Col>
+                            <Col lg={4}>
+                                <div className="role content">
+                                    <p className="role_title cat">Role</p>
+                                    <p className="role_pass item">{user.role}</p>
+                                </div>
+                            </Col>
+                            <Col lg={12} className="mb-4">
+                                <div className="description content">
+                                    <p className="desc_title cat">Random Dad Joke</p>
+                                    <div className="dad-joke">
+                                        <p className="joke">{jokeSetup}</p>
+                                        <p onClick={() => handlePunchlineShow()} className={jokeShow == true ? "reveal show" : "punchline show"}>{jokeShow == true ? `${jokePunchline}` : "Reveal punchline"}</p>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col lg={12} className="mb-4">
+                                <div className="description content">
+                                    <p className="desc_title cat">Description</p>
+                                    <Form>
+                                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                                            <Form.Control as="textarea" rows={3} placeholder={user.description} ref={(input) => (form.current.description = input)} />
+                                        </Form.Group>
+                                        <Button variant="primary" type="submit" onClick={handleNewDescription}>
+                                            Save
+                                        </Button>
+                                    </Form>
+                                </div>
+                            </Col>
+                            <Col lg={12} className="mb-4">
+                                <div className="password content">
+                                    <p className="password_title cat">Change Password</p>
+                                    <Form>
+                                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                                            <div className="password_fields">
+                                                <Form.Control type="password" ref={(input) => (form.current.passwordOne = input)} placeholder="Enter New Password" />
+                                                <Form.Control type="password" className="mx-3" ref={(input) => (form.current.passwordTwo = input)} placeholder="Repeat New Password" />
+                                                <Button variant="primary" type="submit" onClick={handleResetPassword}>
+                                                    Update
+                                                </Button>
+                                            </div>
+                                        </Form.Group>
+                                    </Form>
+                                </div>
+                            </Col>
+                            {user.role === "admin" && (
+                                <Col lg={12}>
+                                    <div className="userlist content">
+                                        <p className="userlist_title cat">Platform Users</p>
+                                        <div className="userlist_users mt-4">
+                                            <Table striped>
+                                                <thead>
+                                                    <tr>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>E-mail</th>
+                                                        <th>Username</th>
+                                                        <th>Role</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {users.map((user) => {
+                                                        return (
+                                                            <tr>
+                                                                <td className="py-3">{user.firstName}</td>
+                                                                <td className="py-3">{user.lastName}</td>
+                                                                <td className="py-3">{user.email}</td>
+                                                                <td className="py-3">{user.username}</td>
+                                                                <td className="py-3">
+                                                                    <select name="role" ref={(input) => (form.current.role = input)}>
+                                                                        <option selected value={user.role}>
+                                                                            {user.role}
+                                                                        </option>
+                                                                        <option value="user">User</option>
+                                                                        <option value="admin">Admin</option>
+                                                                        <option value="superadmin">Super admin</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <Button variant="primary" onClick={() => handleUserRoleChange(user)}>
+                                                                        Update
+                                                                    </Button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </Table>
+                                        </div>
+                                    </div>
+                                </Col>
+                            )}
+                        </Row>
+                    </Container>
                 </div>
               </Col>
               <Col lg={4} className='mb-4' data-testid='email'>
