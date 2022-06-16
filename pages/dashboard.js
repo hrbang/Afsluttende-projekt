@@ -12,30 +12,23 @@ import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
 export default function dashboard({ user }) {
   const [isError, setIsError] = useState(false);
   const [users, setUsers] = useState([]);
+  const [jokeSetup, setJokeSetup] = useState('');
+  const [jokePunchline, setJokePunchline] = useState('');
   const form = useRef({});
 
-  async function getJoke() {
-    const options = {
-      method: 'GET',
-      url: 'https://joke3.p.rapidapi.com/v1/joke',
-      headers: {
-        'X-RapidAPI-Key': 'fb8d3b8980msh570fcd900c3bd18p168c0ajsnfabae8ef5bb9',
-        'X-RapidAPI-Host': 'joke3.p.rapidapi.com'
-      }
-    };
-
-    await axios
-      .request(options)
-      .then(function (response) {
-        //console.log(response.data);
-        return response.data;
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }
-
-  console.log(getJoke().data);
+  const options = {
+    method: 'GET',
+    url: 'https://jokeapi-v2.p.rapidapi.com/joke/Any',
+    params: {
+      format: 'json',
+      idRange: '0-150',
+      type: 'twopart'
+    },
+    headers: {
+      'X-RapidAPI-Key': 'fb8d3b8980msh570fcd900c3bd18p168c0ajsnfabae8ef5bb9',
+      'X-RapidAPI-Host': 'jokeapi-v2.p.rapidapi.com'
+    }
+  };
 
   const handleNewDescription = async () => {
     const newDescription = await axios.post('api/user/newDescription', {
@@ -85,6 +78,23 @@ export default function dashboard({ user }) {
         console.error(error);
       }
     };
+
+    const fetchJoke = async () => {
+      try {
+        await axios
+          .request(options)
+          .then(function (response) {
+            setJokeSetup(response.data.setup);
+            setJokePunchline(response.data.delivery);
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchJoke();
     fetchData();
   }, []);
 
@@ -110,6 +120,17 @@ export default function dashboard({ user }) {
                 <div className='role content'>
                   <p className='role_title cat'>Role</p>
                   <p className='role_pass item'>{user.role}</p>
+                </div>
+              </Col>
+              <Col lg={12} className='mb-4'>
+                <div className='description content'>
+                  <p className='desc_title cat'>Random Dad Joke</p>
+                  <Form>
+                    <Form.Group className='mb-3 ' controlId='formBasicPassword'>
+                      <>{jokeSetup}</>
+                      <>{jokePunchline}</>
+                    </Form.Group>
+                  </Form>
                 </div>
               </Col>
               <Col lg={12} className='mb-4'>
