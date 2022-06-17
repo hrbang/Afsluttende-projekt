@@ -9,7 +9,7 @@ import Background from '../components/Background';
 // Bootstrap
 import { Container, Row, Col } from 'react-bootstrap';
 
-export default function login() {
+export default function Login() {
   const [showRegister, setShowRegister] = useState(null);
 
   const handleFormVisibility = () => {

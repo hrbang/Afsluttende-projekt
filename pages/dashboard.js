@@ -9,7 +9,7 @@ import axios from "axios"
 // Bootstrap
 import { Container, Row, Col, Form, Button, Table } from "react-bootstrap"
 
-export default function dashboard({ user }) {
+export default function Dashboard({ user }) {
     const [isError, setIsError] = useState(false)
     const [users, setUsers] = useState([])
     const [jokeSetup, setJokeSetup] = useState("")
@@ -187,7 +187,7 @@ export default function dashboard({ user }) {
                                                 <tbody>
                                                     {users.map((user) => {
                                                         return (
-                                                            <tr>
+                                                            <tr key={user._id}>
                                                                 <td className="py-3">{user.firstName}</td>
                                                                 <td className="py-3">{user.lastName}</td>
                                                                 <td className="py-3">{user.email}</td>
